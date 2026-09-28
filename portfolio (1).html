@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ullas | Cupola</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%23e2a24f' stroke-width='3'/%3E%3Ccircle cx='16' cy='16' r='3' fill='%23e2a24f'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Hanken+Grotesk:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Spline+Sans+Mono:wght@400;500&display=swap">
+<style>
+:root{--void:#04070c;--hull:#1c2024;--hull2:#252a2f;--edge:#0c0e10;--rule:#3a4148;--ink:#f1f4f6;--body:#c9d0d6;--mid:#a9b3bb;--dim:#8d979f;--atm:#6aa6dc;--sodium:#e2a24f;
+--d:'Big Shoulders Display','Arial Narrow',Impact,sans-serif;--b:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif;--s:'Newsreader',Georgia,serif;--m:'Spline Sans Mono',ui-monospace,Menlo,Consolas,monospace;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+body{margin:0;background:var(--void);color:var(--body);font:400 17px/1.65 var(--s)}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+/* window frame */
+.frame{position:fixed;inset:0;z-index:5;pointer-events:none;border:clamp(10px,2vw,26px) solid var(--hull);border-image:none;box-shadow:inset 0 0 0 2px var(--edge),inset 0 0 90px 30px rgba(0,0,0,.55)}
+.frame::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,transparent 55%,rgba(0,0,0,.35));}
+.bolt{position:fixed;z-index:6;width:9px;height:9px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#59616a,#15181b 70%);pointer-events:none}
+.bolt.a{top:6px;left:6px}.bolt.b{top:6px;right:6px}.bolt.c{bottom:6px;left:6px}.bolt.d{bottom:6px;right:6px}
+/* telemetry strip */
+.tele{position:fixed;z-index:7;top:calc(clamp(10px,2vw,26px) + 10px + env(safe-area-inset-top,0px));left:calc(clamp(10px,2vw,26px) + 14px);right:calc(clamp(10px,2vw,26px) + 14px);display:flex;justify-content:space-between;gap:12px;font:500 12px/1.3 var(--m);color:var(--dim);pointer-events:none;font-variant-numeric:tabular-nums}
+.tele b{color:var(--sodium);font-weight:500}
+.tele span+span{text-align:right}
+main{position:relative;z-index:2;padding:0 clamp(22px,5vw,64px)}
+.gap{height:100vh;height:100svh;display:flex;align-items:flex-end;padding-bottom:12vh}
+.gap.s{height:46vh}
+h1{margin:0;font:800 clamp(64px,15vw,190px)/.86 var(--d);letter-spacing:.005em;text-transform:uppercase;text-shadow:0 2px 30px rgba(0,0,0,.7)}
+.sub{max-width:34em;margin:22px 0 0;font-size:clamp(16px,2vw,20px);color:var(--ink);text-shadow:0 1px 14px #000}
+.cue{margin-top:28px;font:500 12px var(--m);color:var(--dim)}
+.cue i{display:inline-block;width:1px;height:34px;background:var(--dim);vertical-align:middle;margin-right:12px;animation:pull 2.4s ease-in-out infinite;transform-origin:top}
+@keyframes pull{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+/* hull panels */
+.panel{position:relative;max-width:1040px;margin-left:clamp(0px,4vw,60px);background:
+ repeating-linear-gradient(90deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px),linear-gradient(180deg,var(--hull2),var(--hull));
+ border:1px solid var(--rule);border-top-color:#4b535b;padding:clamp(26px,4vw,54px) clamp(22px,4vw,56px) clamp(30px,4vw,54px);box-shadow:0 30px 80px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.05)}
+.panel::before,.panel::after{content:"";position:absolute;top:10px;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#59616a,#15181b 70%)}
+.panel::before{left:10px}.panel::after{right:10px}
+.plate{position:absolute;top:-1px;left:44px;transform:translateY(-100%);background:var(--sodium);color:#1a1207;font:600 12px/1 var(--m);padding:7px 12px 6px;letter-spacing:.02em}
+h2{margin:0 0 22px;font:800 clamp(34px,5.4vw,60px)/.95 var(--d);text-transform:uppercase;letter-spacing:.01em}
+h3{margin:0;font:600 24px/1.1 var(--d);letter-spacing:.02em;text-transform:uppercase}
+p{margin:0 0 1em;max-width:62ch}
+a{color:var(--atm);text-underline-offset:3px}
+a:hover{color:#fff}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--sodium);outline-offset:3px}
+.tri{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0;border-top:1px solid var(--rule);margin-top:26px}
+.tri>div{padding:18px 20px 4px 0;border-right:1px solid var(--rule);padding-left:20px}
+.tri>div:first-child{padding-left:0}.tri>div:last-child{border-right:0}
+.tri h3{font-size:20px;color:var(--atm);margin-bottom:6px}
+.tri p{font-size:14.5px;color:var(--dim)}
+/* flight log */
+.log{border-top:1px solid var(--rule)}
+.entry{display:grid;grid-template-columns:150px 1fr;gap:6px 28px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.when{font:500 13px/1.5 var(--m);color:var(--sodium)}
+.entry h3{margin-bottom:2px}
+.entry .who{color:var(--dim);font-size:14px;margin-bottom:10px}
+.entry ul{margin:0;padding-left:1.1em;color:#c3cad0;font-size:15px}
+.entry li{margin:4px 0}
+@media(max-width:640px){.entry{grid-template-columns:1fr}}
+/* payloads */
+.pl{border-top:1px solid var(--rule)}
+details{border-bottom:1px solid var(--rule)}
+summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:4px 18px;padding:20px 0;align-items:baseline}
+summary::-webkit-details-marker{display:none}
+summary .t{font:800 clamp(26px,3.6vw,38px)/1 var(--d);text-transform:uppercase}
+summary .k{grid-column:1;color:var(--dim);font-size:14px}
+summary .st{grid-row:1;grid-column:2;font:500 12px var(--m);color:var(--sodium);border:1px solid var(--sodium);padding:4px 8px;white-space:nowrap}
+summary:hover .t{color:var(--atm)}
+details[open] summary .st{background:var(--sodium);color:#1a1207}
+.body{padding:2px 0 26px;display:grid;grid-template-columns:1.4fr 1fr;gap:22px 40px;animation:open .35s ease-out}
+@keyframes open{from{opacity:0;clip-path:inset(0 0 100% 0)}to{opacity:1;clip-path:inset(0)}}
+.body p{font-size:15px;color:#c3cad0}
+.read{font:400 13px/1.9 var(--m);border-left:2px solid var(--sodium);padding-left:16px;color:var(--ink)}
+.read em{font-style:normal;color:var(--dim);display:inline-block;min-width:8.5em}
+@media(max-width:720px){.body{grid-template-columns:1fr}summary{grid-template-columns:1fr}summary .st{grid-row:auto;grid-column:1;justify-self:start;margin-top:6px}}
+.more{margin-top:26px;font-size:14.5px;color:var(--dim)}
+/* instruments */
+.inst{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:0;border-top:1px solid var(--rule)}
+.inst>div{padding:18px 22px 18px 0;border-bottom:1px solid var(--rule)}
+.inst h3{font-size:19px;color:var(--atm);margin-bottom:6px}
+.inst p{font:400 13.5px/1.75 var(--m);color:#c3cad0;margin:0}
+/* comms */
+.comms{list-style:none;padding:0;margin:0;border-top:1px solid var(--rule)}
+.comms li{display:grid;grid-template-columns:130px 1fr;padding:13px 0;border-bottom:1px solid var(--rule);font-size:15px}
+.comms span{font:500 12px/1.9 var(--m);color:var(--dim)}
+.foot{padding:12vh 0 14vh;font:400 12px/1.7 var(--m);color:var(--dim);text-shadow:0 1px 8px #000;max-width:60ch;margin-left:clamp(0px,4vw,60px)}
+@media(max-width:560px){.tele span:nth-child(2){display:none}.panel{margin-left:0}.foot{margin-left:0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+/* type roles: display Big Shoulders, text Newsreader, interface Hanken Grotesk, data Spline Sans Mono */
+h1{font-size:clamp(68px,15.5vw,200px)}
+.sub{max-width:24em;font:italic 400 clamp(21px,2.6vw,30px)/1.3 var(--s)}
+.dom{margin:20px 0 0;font:500 15px/1.5 var(--b);color:var(--mid);text-shadow:0 1px 10px #000}
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.btns a{font:600 15px/1 var(--b);text-decoration:none;padding:13px 20px;border:1px solid var(--sodium);color:var(--sodium);background:rgba(4,7,12,.55)}
+.btns a:first-child{background:var(--sodium);color:#1a1207}
+.btns a:hover{color:#fff;border-color:#fff}
+h2{color:var(--ink);font-size:clamp(38px,6vw,68px)}
+p{font-size:17px}
+.lead{font:italic 400 clamp(20px,2.2vw,25px)/1.4 var(--s);color:var(--ink);max-width:34em}
+.tri p,.body p{font:400 16px/1.6 var(--s);color:var(--body)}
+.entry ul{font:400 16px/1.55 var(--s);color:var(--body)}
+.entry .who{font:500 14px var(--b);color:var(--mid)}
+summary .k{font:400 15px/1.4 var(--b);color:var(--mid)}
+.scale{margin:8px 0 6px;font:400 12.5px/1 var(--m)}
+.scale div{display:grid;grid-template-columns:118px 1fr 116px;gap:10px;align-items:center;padding:6px 0}
+.scale em{font-style:normal;color:var(--dim)}
+.scale i{display:block;height:8px;width:var(--w);background:var(--atm)}
+.scale div:last-child i{background:var(--sodium)}
+.scale b{font-weight:500;color:var(--sodium);text-align:right}
+.cap{font:400 13px/1.5 var(--m)!important;color:var(--dim)!important;margin-bottom:18px}
+.flow{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 16px;font:500 12px/1 var(--m)}
+.flow span{border:1px solid var(--rule);padding:7px 9px;color:var(--ink)}
+.flow span:not(:last-child)::after{content:"\2192";margin-left:9px;color:var(--sodium)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
+.chips button{font:500 13px/1 var(--b);background:none;color:var(--mid);border:1px solid var(--rule);padding:9px 14px;cursor:pointer}
+.chips button:hover{color:#fff;border-color:var(--mid)}
+.chips button[aria-pressed=true]{background:var(--sodium);border-color:var(--sodium);color:#1a1207}
+.chips button:focus-visible{outline:2px solid var(--sodium);outline-offset:3px}
+details[hidden]{display:none}
+.nav{position:fixed;z-index:7;left:50%;transform:translateX(-50%);bottom:calc(clamp(10px,2vw,26px) + 10px + env(safe-area-inset-bottom,0px));display:flex;gap:2px;background:rgba(28,32,36,.94);border:1px solid var(--rule);padding:4px;max-width:calc(100% - 64px);overflow-x:auto}
+.nav a{font:500 13px/1 var(--b);color:var(--mid);text-decoration:none;padding:9px 12px;white-space:nowrap}
+.nav a:hover{color:#fff;background:var(--hull2)}
+/* v3: curves, depth, motion */
+.panel{border-radius:20px;scroll-margin-top:30px;background:radial-gradient(520px circle at var(--mx,50%) var(--my,-60%),rgba(255,255,255,.06),transparent 62%),repeating-linear-gradient(90deg,rgba(255,255,255,.018) 0 1px,transparent 1px 3px),linear-gradient(180deg,var(--hull2),var(--hull))}
+.plate{border-radius:10px 10px 0 0}
+html.mo .panel{opacity:calc(.2 + var(--k,1)*.8);transform:translateY(calc((1 - var(--k,1))*40px)) scale(calc(.96 + var(--k,1)*.04));transform-origin:50% 0;will-change:transform,opacity}
+.btns a,.chips button,.nav a,.up{transition:background .2s,color .2s,border-color .2s,transform .2s}
+.btns a{border-radius:999px}.btns a:active,.chips button:active{transform:scale(.96)}
+.chips button{border-radius:999px}
+.nav{border-radius:999px;padding:5px}.nav a{border-radius:999px}
+.nav a.cur{background:var(--sodium);color:#1a1207}
+.pl{border-top:0}
+details{border:1px solid var(--rule);border-radius:18px;margin-top:12px;padding:0 22px;background:rgba(0,0,0,.16);transition:background .25s,border-color .25s}
+details[open]{background:rgba(0,0,0,.28);border-color:#4b535b}
+summary{border-radius:18px}
+.body{animation:none}
+summary .st{border-radius:999px;padding:5px 12px}
+.read{border:1px solid var(--rule);border-left:3px solid var(--sodium);border-radius:12px;padding:14px 16px;background:rgba(0,0,0,.24)}
+.flow span{border-radius:10px}
+.tri,.inst{gap:12px;border-top:0}
+.tri>div,.tri>div:first-child,.tri>div:last-child,.inst>div{border:1px solid var(--rule);border-radius:16px;padding:18px 20px;background:rgba(0,0,0,.18)}
+.rail{position:fixed;z-index:7;right:calc(clamp(10px,2vw,26px) + 10px);top:96px;bottom:96px;width:2px;border-radius:2px;background:var(--rule)}
+.rail i{position:absolute;left:50%;top:0;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--sodium);box-shadow:0 0 0 4px rgba(226,162,79,.2)}
+.up{position:fixed;z-index:7;right:calc(clamp(10px,2vw,26px) + 18px);bottom:calc(clamp(10px,2vw,26px) + 10px + env(safe-area-inset-bottom,0px));width:44px;height:44px;border-radius:50%;border:1px solid var(--rule);background:rgba(28,32,36,.94);color:var(--mid);display:grid;place-items:center;cursor:pointer;opacity:0;pointer-events:none;transform:translateY(8px)}
+.up.on{opacity:1;pointer-events:auto;transform:none}.up:hover{color:#fff;border-color:var(--mid)}
+.up:focus-visible{outline:2px solid var(--sodium);outline-offset:3px}
+#top>div>*{animation:rise 1s cubic-bezier(.2,.7,.2,1) both}
+#top>div>:nth-child(2){animation-delay:.12s}#top>div>:nth-child(3){animation-delay:.24s}#top>div>:nth-child(4){animation-delay:.36s}#top>div>:nth-child(5){animation-delay:.6s}
+@keyframes rise{from{opacity:0;transform:translateY(26px)}}
+@media(max-width:720px){.rail{display:none}}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<div class="frame" aria-hidden="true"></div>
+<i class="bolt a"></i><i class="bolt b"></i><i class="bolt c"></i><i class="bolt d"></i>
+<div class="tele" aria-hidden="true">
+<span>Altitude <b>408 km</b><br>Orbit phase <b id="ph">0.0%</b></span>
+<span>Nadir <b id="ll">--</b></span>
+<span>UTC <b id="clk">--:--:--</b><br>View: simulated</span>
+</div>
+
+<nav class="nav" aria-label="Sections"><a href="#profile">About</a><a href="#log">Experience</a><a href="#payloads">Projects</a><a href="#instruments">Skills</a><a href="#records">Research</a><a href="#contact">Contact</a></nav>
+<div class="rail" aria-hidden="true"><i id="dot"></i></div>
+<button class="up" id="up" aria-label="Back to top"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 10l5-5 5 5" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>
+<main>
+<section class="gap" id="top">
+<div>
+<h1>Ullas C L</h1>
+<p class="sub">AI/ML engineer building intelligent systems for software, Earth observation and space technology.</p>
+<p class="dom">Remote sensing, computer vision, space systems, GenAI and backend engineering.</p><div class="btns"><a href="#payloads">View projects</a><a href="https://github.com/Ullas36">GitHub</a><a href="https://linkedin.com/in/ullas-cl">LinkedIn</a></div>
+<div class="cue"><i></i>Scroll to move along the orbit</div>
+</div>
+</section>
+
+<section class="panel" id="profile" aria-labelledby="h-profile">
+<span class="plate">Profile</span>
+<h2 id="h-profile">Machine learning, applied to physical-world systems</h2>
+<p class="lead">My background is in Information Science and Engineering, and my work has moved toward the point where AI meets physical systems: satellite imagery, hyperspectral data, orbital mechanics, quantum optimization, LLM systems and production backends.</p>
+<div class="tri">
+<div><h3>AI and space</h3><p>SAR to optical translation, hyperspectral mineral mapping, ocean colour data, and a debris removal planner.</p></div>
+<div><h3>AI and systems</h3><p>FastAPI, PostgreSQL, Redis, Docker and cloud deployment, with OCR, speech and LLM features on top.</p></div>
+<div><h3>Research</h3><p>Quantum ML, optimization, scientific computing and careful model evaluation, with a published RAG evaluation paper.</p></div><div><h3>Quantum and aerospace</h3><p>QUBO and QAOA for orbital debris sequencing, with 17 experiments run on an IBM Heron r2 processor.</p></div>
+</div>
+</section>
+
+<div class="gap s"></div>
+
+<section class="panel" id="log" aria-labelledby="h-log">
+<span class="plate">Flight log</span>
+<h2 id="h-log">Experience and education</h2><p class="lead">The path so far: applied AI, then quantum machine learning, then orbital computation, then production engineering.</p>
+<div class="log">
+<div class="entry"><div class="when">2026</div><div><h3>B.E. Information Science &amp; Engineering</h3><div class="who">Graduated, CGPA 8.95</div></div></div>
+<div class="entry"><div class="when">Jan 2026 to Aug 2026</div><div><h3>AI Full Stack Developer Intern</h3><div class="who">Dhiware Technologies (DTCoE)</div>
+<ul><li>Built BuildaMart, a WhatsApp-first marketplace for construction materials, on FastAPI, PostgreSQL, Redis and Docker.</li><li>Added OCR catalogue extraction, voice ordering, and natural-language-to-SQL product search.</li><li>Wrote the reliability layer: webhook signature checks, message deduplication, audit trails and transactional orders.</li><li>Tested with Pytest on the API and Vitest on React components.</li></ul></div></div>
+<div class="entry"><div class="when">Jan 2026 to May 2026</div><div><h3>Quantum Machine Learning Intern</h3><div class="who">Ada Lovelace Software</div>
+<ul><li>Implemented hybrid quantum-classical models and quantum optimization in Qiskit and PennyLane.</li><li>Delivered ORBIS, the debris removal project described below.</li></ul></div></div>
+<div class="entry"><div class="when">Sep 2025 to Jan 2026</div><div><h3>Machine Learning Engineer Intern</h3><div class="who">MyBestLife</div>
+<ul><li>Built a retrieval-augmented chatbot using OpenAI embeddings, a Pinecone index, gpt-4o-mini and a Gradio interface.</li></ul></div></div>
+</div>
+</section>
+
+<div class="gap s"></div>
+
+<section class="panel" id="payloads" aria-labelledby="h-pl">
+<span class="plate">Projects</span>
+<h2 id="h-pl">Selected work</h2><div class="chips" role="group" aria-label="Filter projects"><button data-f="all" aria-pressed="true">All</button><button data-f="space" aria-pressed="false">Space</button><button data-f="aiml" aria-pressed="false">AI/ML</button><button data-f="genai" aria-pressed="false">GenAI</button><button data-f="software" aria-pressed="false">Software</button><button data-f="research" aria-pressed="false">Research</button></div>
+<div class="pl">
+
+<details open><summary><span class="t">ORBIS</span><span class="st">Quantum hardware</span><span class="k">Orbital Remediation Quantum Intelligence System: choosing and sequencing debris to remove.</span></summary>
+<div class="body"><div>
+<p>Screens 15,982 tracked objects from Space-Track using SGP4 propagation, then runs a 72-hour conjunction analysis with a KD-tree and the Chan 2008 collision probability method. Targets are picked by a diversity-aware score across orbital regimes.</p>
+<p>A physics-informed network, DeltaVNet, approximates manoeuvre delta-v. Sequencing is written as a QUBO and solved with QAOA, against a simulated annealing baseline.</p>
+<div class="scale"><div><em>n=4, 16 qubits</em><i style="--w:51%"></i><b>100%</b></div><div><em>n=5, 25 qubits</em><i style="--w:55%"></i><b>110.5 &plusmn; 9.7%</b></div><div><em>n=6, 36 qubits</em><i style="--w:58%"></i><b>115.9 &plusmn; 18.7%</b></div><div><em>n=8, 64 qubits</em><i style="--w:98%"></i><b>195.1 &plusmn; 12.2%</b></div></div><p class="cap">Recorded QPU results by problem size, with the n=4 run as the 100% reference. Hardware noise grows with circuit depth, and quality drops sharply at the larger sizes.</p><p><a href="https://github.com/Ullas36/ORBIS--Orbit-Debris-Intelligence-System.git">Source on GitHub</a></p></div>
+<div class="read"><em>QPU runs</em>17 on ibm_fez<br><em>Problem size</em>16 to 64 qubits<br><em>Circuit depth</em>523 to 3,500 gates<br><em>DeltaVNet</em>563K params, 3.77% MAPE<br><em>Stack</em>Qiskit, PennyLane, PyTorch, Streamlit</div></div></details>
+
+<details><summary><span class="t">SAR to optical</span><span class="st">Deep learning</span><span class="k">Translating Sentinel-1 radar patches into optical-style imagery with Pix2Pix.</span></summary>
+<div class="body"><div>
+<p>16,000 paired patches over four terrains, split by scene (21 train, 4 validation, 5 test) so no scene appears in two sets. I compared the baseline against an L1-only ablation and a variant with spatial attention and VGG19 perceptual loss. Neither variant beat the baseline, and I report that as it is.</p>
+<p><a href="https://github.com/Ullas36/SAR-to-EO-Translation">Source on GitHub</a></p></div>
+<div class="read"><em>Test pairs</em>2,883<br><em>LPIPS</em>0.552<br><em>SSIM</em>0.137<br><em>PSNR</em>12.55 dB<br><em>FID</em>303.09<br><em>Model</em>U-Net + PatchGAN</div></div></details>
+
+<details><summary><span class="t">Cuprite minerals</span><span class="st">Hyperspectral</span><span class="k">Mineral mapping from AVIRIS shortwave infrared data over Cuprite, Nevada.</span></summary>
+<div class="body"><div>
+<p>Works on the 1900 to 2470 nm range against the USGS spectral library. The pipeline extracts endmembers with a VCA-style method, applies continuum removal, matches with Spectral Angle Mapper against several references, and masks low-confidence pixels. Buddingtonite is folded into the montmorillonite family because its reference spectra mix.</p>
+<p><a href="https://github.com/Ullas36/cuprite-hyperspectral-mineral-mapping">Source on GitHub</a></p></div>
+<div class="read"><em>Minerals</em>montmorillonite, muscovite, kaolinite, alunite<br><em>Range</em>1900 to 2470 nm<br><em>Method</em>VCA, SAM, continuum removal</div></div></details>
+
+<details><summary><span class="t">BuildaMart</span><span class="st">Production</span><span class="k">WhatsApp marketplace connecting local sellers and buyers of building materials.</span></summary>
+<div class="body"><div>
+<p>Sellers and buyers onboard through WhatsApp, with catalogue, search, cart, orders and location-based matching in several languages. Requests pass through Caddy to FastAPI, then to PostgreSQL, Redis and background workers that handle OCR, speech and LLM calls. Delivery runs through GitHub Actions and Docker.</p>
+<div class="flow"><span>WhatsApp Cloud API</span><span>Caddy</span><span>FastAPI</span><span>PostgreSQL, Redis, workers</span><span>OCR, speech, LLM</span><span>Orders</span></div><p><a href="https://github.com/CollabarativeMartPlatformGW/BuildaMart_WhatsApp_Repo.git">Source on GitHub</a></p></div>
+<div class="read"><em>Interface</em>Meta WhatsApp Cloud API<br><em>Core</em>FastAPI, PostgreSQL, Redis<br><em>AI</em>PaddleOCR, Sarvam AI, LLM SQL<br><em>Safety</em>signed webhooks, dedup, audit</div></div></details>
+
+<details><summary><span class="t">Dynamic news RAG</span><span class="st">GenAI</span><span class="k">Question answering grounded in freshly retrieved news, not a fixed corpus.</span></summary>
+<div class="body"><div>
+<p>A query pulls current articles from NewsAPI, which are chunked, embedded with SentenceTransformers and indexed in FAISS. The top matches go to an LLM through Groq or OpenAI so answers stay tied to the retrieved text. BM25 and retrieval evaluation components support comparison, and a Gradio interface sits on top.</p></div>
+<div class="read"><em>Retrieval</em>SentenceTransformers, FAISS, BM25<br><em>Generation</em>Groq, OpenAI<br><em>Interface</em>Gradio</div></div></details>
+<details><summary><span class="t">EuroSAT classifier</span><span class="st">Computer vision</span><span class="k">Land-use classification on Sentinel-2 patches.</span></summary><div class="body"><div><p>A compact CNN trained on 27,000 RGB patches across ten classes, with normalisation, augmentation and a 70/15/15 split. Supporting work for the larger Earth observation projects.</p><p><a href="https://github.com/Ullas36/satellite-image-classifier">Source on GitHub</a></p></div><div class="read"><em>Patches</em>27,000 at 64x64<br><em>Classes</em>10<br><em>Network</em>2 conv blocks, dense 128<br><em>Training</em>Adam, 10 epochs</div></div></details>
+</div>
+<p class="more">Also in the repositories: Indian Pines hyperspectral classification, a BB84 key distribution simulator in Qiskit, and SDSS galaxy spectroscopy with Gaussian fitting on H-alpha.</p>
+</section>
+
+<div class="gap s"></div>
+
+<section class="panel" id="instruments" aria-labelledby="h-in">
+<span class="plate">Tools</span>
+<h2 id="h-in">What I work with</h2>
+<div class="inst">
+<div><h3>Machine learning</h3><p>PyTorch, TensorFlow, Pix2Pix, U-Net, CNNs, physics-informed networks, scikit-learn, OpenCV, NumPy, Pandas, LPIPS, SSIM, FID</p></div>
+<div><h3>Language models</h3><p>RAG, FAISS, Pinecone, SentenceTransformers, LangChain, Groq, OpenAI</p></div>
+<div><h3>Backend and cloud</h3><p>FastAPI, PostgreSQL, Redis, Docker, Caddy, AWS, Azure, GitHub Actions, Pytest, Vitest, React</p></div>
+<div><h3>Remote sensing</h3><p>AVIRIS, Sentinel-1, Sentinel-2, HICO, PACE-OCI, Hyperion, SeaDAS, QGIS, NASA Earthdata, SAM, VCA, PCA</p></div>
+<div><h3>Orbital and quantum</h3><p>SGP4, conjunction screening, Qiskit, PennyLane, QUBO, QAOA, IBM Quantum</p></div>
+<div><h3>Speech and vision</h3><p>PaddleOCR, Sarvam AI speech-to-text, multilingual voice search</p></div>
+</div>
+</section>
+
+<div class="gap s"></div>
+
+<section class="panel" id="explore" aria-labelledby="h-ex"><span class="plate">Currently exploring</span><h2 id="h-ex">What I am working toward</h2><div class="tri"><div><h3>Space systems</h3><p>VLEO propulsion, orbital mechanics and spacecraft applications.</p></div><div><h3>AI for space</h3><p>Computer vision, Earth observation and efficient inference.</p></div><div><h3>Quantum computing</h3><p>QML and optimization for scientific and engineering problems.</p></div></div></section>
+
+<div class="gap s"></div>
+
+<section class="panel" id="records" aria-labelledby="h-rec">
+<span class="plate">Publication and training</span>
+<h2 id="h-rec">Records</h2>
+<p><strong>Evaluation Metrics for Retrieval-Augmented Generation (RAG) Systems: A Framework Proposal.</strong> Presented at ICDTE, RVITM. <a href="https://doi.org/10.5281/zenodo.21607583">doi.org/10.5281/zenodo.21607583</a></p>
+<p>NASA ARSET: Fundamentals of Remote Sensing, and Hyperspectral Data for Land and Coastal Systems. IISc workshop on quantum computing familiarisation (FQCI).</p>
+</section>
+
+<div class="gap s"></div>
+
+<section class="panel" id="contact" aria-labelledby="h-c">
+<span class="plate">Contact</span>
+<h2 id="h-c">Let us build something interesting</h2><p class="lead">Open to opportunities in AI/ML, aerospace and space technology, remote sensing, GenAI and backend engineering.</p>
+<ul class="comms">
+<li><span>Email</span><a href="mailto:ullacsl963@gmail.com">ullacsl963@gmail.com</a></li><li><span>LinkedIn</span><a href="https://linkedin.com/in/ullas-cl">linkedin.com/in/ullas-cl</a></li><li><span>Code</span><a href="https://github.com/Ullas36">github.com/Ullas36</a></li>
+<li><span>Portfolio</span><a href="https://portfolio-eight-pi-du5jap3p2y.vercel.app/">portfolio-eight-pi-du5jap3p2y.vercel.app</a></li>
+<li><span>Paper</span><a href="https://doi.org/10.5281/zenodo.21607583">Zenodo record</a></li>
+</ul>
+</section>
+<p class="foot">The Earth view is drawn live in your browser and is not real imagery. City lights drift with your scroll to mimic orbital motion.</p>
+</main>
+
+<script>
+(function(){
+var c=document.getElementById('sky'),x=c.getContext('2d'),W,H,dpr,stars=[],lights=[],sy=0,sm=0,t0=performance.now();
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function rnd(a){return Math.random()*a}
+function init(){
+ dpr=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+ stars=[];for(var i=0;i<Math.floor(W*H/2600);i++)stars.push({x:rnd(W),y:rnd(H*.8),r:rnd(1)+.2,a:rnd(.7)+.2,p:rnd(6.28),s:rnd(.6)+.1});
+ lights=[];var cl=[];for(i=0;i<22;i++)cl.push({x:rnd(1),t:rnd(.9)+.05,sp:rnd(1)});
+ cl.forEach(function(k){var n=30+Math.floor(rnd(60));for(var j=0;j<n;j++){var g=(Math.random()+Math.random()+Math.random()-1.5)*.05;lights.push({u:k.x+g,v:Math.min(1,Math.max(0,k.t+(Math.random()-.5)*.08)),a:rnd(.7)+.25,w:rnd(1)>.85})}});
+}
+function frame(now){
+ var tt=(now-t0)/1000,R=W*1.9,cx=W/2,top=H*.74,cy=top+R;
+ sm+=(scrollY-sm)*(reduce?1:.08);var sc=sm,max=Math.max(1,document.documentElement.scrollHeight-H),ph=sc/max;
+ x.clearRect(0,0,W,H);
+ var bg=x.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#02040a');bg.addColorStop(.7,'#060b14');bg.addColorStop(1,'#0a1422');x.fillStyle=bg;x.fillRect(0,0,W,H);
+ stars.forEach(function(s){var tw=reduce?1:.75+.25*Math.sin(tt*s.s*3+s.p);x.globalAlpha=s.a*tw;x.fillStyle='#dfe8f5';var yy=(s.y-sc*.02*s.s*3);x.fillRect(s.x,yy<0?yy+H*.8:yy,s.r,s.r)});
+ x.globalAlpha=1;
+ // atmosphere haze
+ var hz=x.createRadialGradient(cx,cy,R,cx,cy,R+H*.09);hz.addColorStop(0,'rgba(106,166,220,.45)');hz.addColorStop(.25,'rgba(70,120,190,.14)');hz.addColorStop(1,'rgba(20,40,80,0)');
+ x.fillStyle=hz;x.beginPath();x.arc(cx,cy,R+H*.09,0,6.283);x.fill();
+ // planet body
+ var pg=x.createLinearGradient(0,top,0,H);pg.addColorStop(0,'#0b1a2e');pg.addColorStop(.25,'#060e1a');pg.addColorStop(1,'#020408');
+ x.fillStyle=pg;x.beginPath();x.arc(cx,cy,R,0,6.283);x.fill();
+ // limb line
+ var lg=x.createLinearGradient(0,top-4,0,top+30);lg.addColorStop(0,'rgba(190,225,255,.9)');lg.addColorStop(1,'rgba(106,166,220,0)');
+ x.strokeStyle=lg;x.lineWidth=2;x.beginPath();x.arc(cx,cy,R-1,0,6.283);x.stroke();
+ // dawn glow on one side of limb
+ var dg=x.createRadialGradient(W*(.82-ph*.6),top+H*.03,0,W*(.82-ph*.6),top+H*.03,W*.35);dg.addColorStop(0,'rgba(255,190,120,.16)');dg.addColorStop(1,'rgba(255,190,120,0)');
+ x.save();x.beginPath();x.arc(cx,cy,R+H*.09,0,6.283);x.clip();x.fillStyle=dg;x.fillRect(0,0,W,H);x.restore();
+ // city lights, perspective compressed toward the limb
+ var off=(ph*1.6+(reduce?0:tt*.006))%1,depth=H-top;
+ lights.forEach(function(l){
+  var v=l.v,y=top+depth*(v*v*.9+.02),sp=.5+v*2.2,u=((l.u+off*sp)%1+1)%1,px=(u*1.5-.25)*W;
+  var dx=px-cx,dy=y-cy;if(dx*dx+dy*dy>R*R-40)return;
+  x.globalAlpha=l.a*(.45+v*.55);x.fillStyle=l.w?'#fff2d8':'#e2a24f';var s=.6+v*1.5;x.fillRect(px,y,s,s);
+ });
+ x.globalAlpha=1;
+ // readouts
+ var hrs=new Date(),p=function(n){return String(n).padStart(2,'0')};
+ document.getElementById('clk').textContent=p(hrs.getUTCHours())+':'+p(hrs.getUTCMinutes())+':'+p(hrs.getUTCSeconds());
+ document.getElementById('ph').textContent=(ph*100).toFixed(1)+'%';
+ var lat=51.6*Math.sin(ph*6.283*2),lon=((ph*360*3+tt*.4)%360)-180;
+ document.getElementById('ll').textContent=Math.abs(lat).toFixed(2)+(lat<0?' S ':' N ')+Math.abs(lon).toFixed(2)+(lon<0?' W':' E');
+ if(!reduce)requestAnimationFrame(frame);
+}
+init();addEventListener('resize',init);
+if(reduce){frame(performance.now());addEventListener('scroll',function(){frame(performance.now())},{passive:true})}else requestAnimationFrame(frame);
+})();
+</script>
+<script>
+(function(){var T={'ORBIS':'space aiml research','SAR to optical':'space aiml research','Cuprite minerals':'space aiml research','BuildaMart':'genai software','Dynamic news RAG':'aiml genai software research','EuroSAT classifier':'space aiml'};
+var ds=[].slice.call(document.querySelectorAll('#payloads details'));
+ds.forEach(function(d){d.dataset.t=T[d.querySelector('.t').textContent]||''});
+var bs=[].slice.call(document.querySelectorAll('.chips button'));
+bs.forEach(function(b){b.addEventListener('click',function(){var f=b.dataset.f;bs.forEach(function(o){o.setAttribute('aria-pressed',o===b)});
+ds.forEach(function(d){var sh=(f==='all'||d.dataset.t.split(' ').indexOf(f)>-1),was=d.hidden;d.hidden=!sh;if(sh&&was&&d.animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches)d.animate([{opacity:0,transform:'translateY(12px)'},{opacity:1,transform:'none'}],{duration:340,easing:'ease-out'})})})});
+})();
+</script>
+<script>
+(function(){
+var root=document.documentElement,reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+if(!reduce)root.classList.add('mo');
+var panels=[].slice.call(document.querySelectorAll('.panel')),dot=document.getElementById('dot'),up=document.getElementById('up'),hero=document.querySelector('#top>div');
+var links=[].slice.call(document.querySelectorAll('.nav a')),secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))}),tick=false;
+function upd(){tick=false;var vh=innerHeight,y=scrollY,max=Math.max(1,root.scrollHeight-vh);
+ dot.style.top=(y/max*100)+'%';up.classList.toggle('on',y>vh*.7);
+ if(!reduce){hero.style.opacity=Math.max(0,1-y/(vh*.6));hero.style.transform='translateY('+(-y*.12)+'px)';
+  panels.forEach(function(p){var k=Math.min(1,Math.max(0,(vh-p.getBoundingClientRect().top)/(vh*.32)));p.style.setProperty('--k',k.toFixed(3))})}
+ var cur=0;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top<vh*.45)cur=i});
+ links.forEach(function(a,i){a.classList.toggle('cur',i===cur&&y>vh*.5)})}
+function req(){if(!tick){tick=true;requestAnimationFrame(upd)}}
+addEventListener('scroll',req,{passive:true});addEventListener('resize',req);upd();
+up.addEventListener('click',function(){scrollTo({top:0,behavior:reduce?'auto':'smooth'})});
+panels.forEach(function(p){p.addEventListener('pointermove',function(e){if(e.pointerType==='touch')return;var r=p.getBoundingClientRect();p.style.setProperty('--mx',(e.clientX-r.left)+'px');p.style.setProperty('--my',(e.clientY-r.top)+'px')})});
+[].slice.call(document.querySelectorAll('#payloads summary')).forEach(function(sm){sm.addEventListener('click',function(e){
+ var d=sm.parentNode,b=d.querySelector('.body');if(reduce||!b.animate)return;e.preventDefault();b.style.overflow='hidden';
+ if(d.open){var h=b.offsetHeight,a=b.animate([{height:h+'px',opacity:1},{height:'0px',opacity:0}],{duration:280,easing:'ease'});a.onfinish=function(){d.open=false;b.style.overflow=''}}
+ else{d.open=true;var h2=b.offsetHeight,a2=b.animate([{height:'0px',opacity:0},{height:h2+'px',opacity:1}],{duration:340,easing:'ease'});a2.onfinish=function(){b.style.overflow=''}}})});
+})();
+</script>
+</body>
+</html>
